@@ -1,7 +1,12 @@
-public class LogicalExpression {
-    int rank;
+public interface LogicalExpression {
+    
 
-    public LogicalExpression(){
-        
-    }
+    
+
+    public boolean contains(LogicalExpression containsLE);
+
+    public String toString();
+
+    public int getRank();
+    
 }

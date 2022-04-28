@@ -1,8 +1,16 @@
-public class Not extends LogicalExpression {
+public class Not implements LogicalExpression {
     LogicalExpression LE;
+    int rank;
 
     public Not(LogicalExpression LE){
-        super.rank = LE.rank + 1;
+        this.rank = LE.getRank() + 1;
         this.LE = LE;
+    }
+
+    public boolean contains(LogicalExpression containsLE){
+        if(LE.contains(containsLE)){
+            return true;
+        }
+        return false;
     }
 }

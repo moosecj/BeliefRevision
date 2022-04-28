@@ -53,6 +53,12 @@ public class Main {
      */
 
     public static void main(String[] args) throws Exception {
+        Symbol p = new Symbol("p");
+        Symbol q = new Symbol("q");
+        Implication pthenq = new Implication(p, q);
+
+        System.out.println(pthenq.contains(p));
+
         ArrayList<LogicalExpression> LEset = logicalExpressionParser();
     }
 
@@ -83,5 +89,21 @@ public class Main {
         
         return LEset;
 
+    }
+
+    public String baseToString(ArrayList<LogicalExpression> base) {
+        String res = "\{";
+        for(LogicalExpression le : base) {
+            
+        }
+
+        return res;
+    } 
+
+    private String extractValue(LogicalExpression le) {
+        ret = "";
+
+
+        return ret;
     }
 }
