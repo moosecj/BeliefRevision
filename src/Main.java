@@ -1,3 +1,4 @@
+import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -68,7 +69,7 @@ public class Main {
         LEset.add(pthenq);
         LEset.add(s);
         
-        // ArrayList<LogicalExpression> LEset = logicalExpressionParser();
+        //ArrayList<LogicalExpression> LEset = logicalExpressionParser();
         System.out.println("BEFORE CONTRACT");
         for (LogicalExpression item : LEset) {
             System.out.println(item.toString());
@@ -82,6 +83,14 @@ public class Main {
         for (LogicalExpression item : LEset) {
             System.out.println(item.toString());
         }
+        // while(true){
+        //     LEset = logicalExpressionParser();
+        //     System.out.println("Parser");
+        //     for (LogicalExpression item : LEset) {
+        //         System.out.println(item.toString());
+        //     }
+        // }
+        
     }
 
     private static ArrayList<LogicalExpression> logicalExpressionParser() {
@@ -93,7 +102,7 @@ public class Main {
         System.out.println("An example could be 'p, p -> q' or p, p -> (q AND r)");
 
         String userInput = scanner.nextLine();
-        userInput.replaceAll("\\s+","");
+        userInput = userInput.replaceAll("\\s+","");
         String[] BeliefBase = userInput.split(",");
 
         InputParser inputParser = new InputParser();

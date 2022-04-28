@@ -24,6 +24,7 @@ public class InputParser {
     }
 
     private LogicalExpression parseStringExpression(String beliefString) {
+        System.out.println("Im called Bitch! " + beliefString);
         // Base case
         if(beliefString.length() == 1) {
             Symbol symbol = new Symbol(beliefString);
@@ -38,14 +39,14 @@ public class InputParser {
             char c = charArr[i];
             switch(c) {
                 case('!'): // NOT
-                    String rest = beliefString.substring(i, beliefString.length() - 1);
+                    String rest = beliefString.substring(i+1, beliefString.length());
                     Not not = new Not(parseStringExpression(rest));
                 return not;
                 case('A'): // AND
                     if(i + 2 < beliefString.length() && (charArr[i + 1] == 'N' && charArr[i + 2] == 'D')) {
                         // p AND q
-                        String before = beliefString.substring(0, i - 1);
-                        String after = beliefString.substring(i + 2, beliefString.length() - 1);
+                        String before = beliefString.substring(0, i);
+                        String after = beliefString.substring(i + 3, beliefString.length());
                         And and = new And(parseStringExpression(before), parseStringExpression(after));
                         return and;
                     }
@@ -53,16 +54,16 @@ public class InputParser {
                 case('O'): // OR
                     if(i + 1 < beliefString.length() && charArr[i + 1] == 'R') {
                         // p OR q
-                        String before = beliefString.substring(0, i - 1);
-                        String after = beliefString.substring(i + 2, beliefString.length() - 1);
-                        And and = new And(parseStringExpression(before), parseStringExpression(after));
-                        return and;
+                        String before = beliefString.substring(0, i);
+                        String after = beliefString.substring(i + 2, beliefString.length());
+                        Or or = new Or(parseStringExpression(before), parseStringExpression(after));
+                        return or;
                     }
                 case('-'): // ->
                     if(i + 1 < beliefString.length() && charArr[i + 1] == '>') {
                         // p -> q
-                        String before = beliefString.substring(0, i - 1);
-                        String after = beliefString.substring(i + 2, beliefString.length() - 1);
+                        String before = beliefString.substring(0, i);
+                        String after = beliefString.substring(i + 2, beliefString.length());
                         Implication implication = new Implication(parseStringExpression(before), parseStringExpression(after));
                         return implication;
                     }
@@ -70,8 +71,8 @@ public class InputParser {
                 case('<'):
                     if(i + 2 < beliefString.length() && (charArr[i + 1] == '-' && charArr[i + 2] == '>')) {
                         // p <-> q
-                        String before = beliefString.substring(0, i - 1);
-                        String after = beliefString.substring(i + 2, beliefString.length() - 1);
+                        String before = beliefString.substring(0, i);
+                        String after = beliefString.substring(i + 3, beliefString.length());
                         Biimplication biimplication = new Biimplication(parseStringExpression(before), parseStringExpression(after));
                         return biimplication;
                     }
@@ -84,7 +85,7 @@ public class InputParser {
                         }
                     }
                     if(i >= charArr.length - 1) {
-                        beliefString = beliefString.substring(1, beliefString.length()-2);
+                        beliefString = beliefString.substring(1, beliefString.length()-1);
                         return parseStringExpression(beliefString);
                     }
                 break;
