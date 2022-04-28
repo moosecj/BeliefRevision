@@ -55,11 +55,14 @@ public class Main {
     public static void main(String[] args) throws Exception {
         Symbol p = new Symbol("p");
         Symbol q = new Symbol("q");
+        Symbol s = new Symbol("s");
         Implication pthenq = new Implication(p, q);
 
-        System.out.println(pthenq.contains(p));
+        System.out.println(pthenq + " contains " + p + ": " + pthenq.contains(p));
+        
+        System.out.println(pthenq + " contains " + s + ": " + pthenq.contains(s));
 
-        ArrayList<LogicalExpression> LEset = logicalExpressionParser();
+        // ArrayList<LogicalExpression> LEset = logicalExpressionParser();
     }
 
     private static ArrayList<LogicalExpression> logicalExpressionParser() {
@@ -91,19 +94,19 @@ public class Main {
 
     }
 
-    public String baseToString(ArrayList<LogicalExpression> base) {
-        String res = "\{";
-        for(LogicalExpression le : base) {
+    // public String baseToString(ArrayList<LogicalExpression> base) {
+    //     String res = "\{";
+    //     for(LogicalExpression le : base) {
             
-        }
+    //     }
 
-        return res;
-    } 
+    //     return res;
+    // } 
 
-    private String extractValue(LogicalExpression le) {
-        ret = "";
+    // private String extractValue(LogicalExpression le) {
+    //     ret = "";
 
 
-        return ret;
-    }
+    //     return ret;
+    // }
 }

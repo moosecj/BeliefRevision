@@ -25,7 +25,7 @@ public class And implements LogicalExpression {
 
     @Override
     public String toString(){
-        return LE1.toString() + LE2.toString();
+        return LE1.toString() + " AND " + LE2.toString();
     }
     
 }

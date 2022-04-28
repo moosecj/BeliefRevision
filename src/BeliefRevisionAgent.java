@@ -17,7 +17,11 @@ public class BeliefRevisionAgent {
     }
 
     public ArrayList<LogicalExpression> contract(ArrayList<LogicalExpression> Beliefbase, LogicalExpression le) {
-        // if(BeliefBase.contains(le)) BeliefBase.remove
+        // foreach(LogicalExpression LEinBeliefBase : BeliefBase){
+        //     if(LEinBeliefBase.contains(le)){
+
+        //     }
+        // }
         return null;
     }
 

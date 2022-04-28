@@ -23,6 +23,6 @@ public class Parenthesis implements LogicalExpression {
 
     @Override
     public String toString(){
-        return LE.toString();
+        return "(" + LE.toString() + ")";
     }
 }

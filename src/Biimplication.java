@@ -25,6 +25,6 @@ public class Biimplication implements LogicalExpression {
 
     @Override
     public String toString(){
-        return LE1.toString() + LE2.toString();
+        return LE1.toString() + " <-> " + LE2.toString();
     }
 }
