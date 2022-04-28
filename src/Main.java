@@ -62,7 +62,23 @@ public class Main {
         
         System.out.println(pthenq + " contains " + s + ": " + pthenq.contains(s));
 
-        ArrayList<LogicalExpression> LEset = logicalExpressionParser();
+        ArrayList<LogicalExpression> LEset = new ArrayList<LogicalExpression>();
+
+        LEset.add(p);
+        LEset.add(pthenq);
+        LEset.add(s);
+        
+        // ArrayList<LogicalExpression> LEset = logicalExpressionParser();
+        System.out.println("BEFORE CONTRACT");
+        for (LogicalExpression item : LEset) {
+            System.out.println(item.toString());
+        }
+
+        BeliefRevisionAgent brAgent = new BeliefRevisionAgent(LEset);
+
+        brAgent.contract(LEset, q);
+
+        System.out.println("AFTER CONTRACT");
         for (LogicalExpression item : LEset) {
             System.out.println(item.toString());
         }
