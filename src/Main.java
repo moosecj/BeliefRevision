@@ -62,7 +62,10 @@ public class Main {
         
         System.out.println(pthenq + " contains " + s + ": " + pthenq.contains(s));
 
-        // ArrayList<LogicalExpression> LEset = logicalExpressionParser();
+        ArrayList<LogicalExpression> LEset = logicalExpressionParser();
+        for (LogicalExpression item : LEset) {
+            System.out.println(item.toString());
+        }
     }
 
     private static ArrayList<LogicalExpression> logicalExpressionParser() {
@@ -78,7 +81,7 @@ public class Main {
         String[] BeliefBase = userInput.split(",");
 
         InputParser inputParser = new InputParser();
-        inputParser.parseInput(BeliefBase);
+        LEset = inputParser.parseInput(BeliefBase);
 
         
         // for(int i = 0; i < BeliefBases.length; i++){

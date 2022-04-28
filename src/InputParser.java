@@ -76,6 +76,18 @@ public class InputParser {
                         return biimplication;
                     }
                 break;
+                case('('):
+                    for(int j = i; j < charArr.length; j++) {
+                        char cj = charArr[j];
+                        if(cj == ')') {
+                            i = j;
+                        }
+                    }
+                    if(i >= charArr.length - 1) {
+                        beliefString = beliefString.substring(1, beliefString.length()-2);
+                        return parseStringExpression(beliefString);
+                    }
+                break;
             }
         }
 
