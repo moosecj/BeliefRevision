@@ -1,10 +1,10 @@
-public class BeliefBase {
-    
-    public boolean negation(boolean p){
-        return !p;
-    }
+// public class BeliefBase {
+//     private LogicalExpression[] base;
 
-    public boolean conjunction(boolean p, boolean q){
-        return p && q;
-    }
-}
+//     public BeliefBase(LogicalExpression[] base) {
+//         this.base = base;
+//     }
+
+//     public LogicalExpression[] 
+
+// }
