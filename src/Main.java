@@ -1,4 +1,3 @@
-import java.lang.Character.UnicodeBlock;
 import java.util.ArrayList;
 import java.util.Scanner;
 
@@ -106,7 +105,7 @@ public class Main {
         String userInput = scanner.nextLine();
         userInput = userInput.replaceAll("\\s+","");
 
-        if(userInput.toLowerCase() == "exit") {System.out.println("HEJ"); System.exit(0); }
+        if(userInput.toLowerCase().equals("exit")) { System.exit(0); }
 
         String[] BeliefBase = userInput.split(",");
 
