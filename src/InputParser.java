@@ -24,7 +24,7 @@ public class InputParser {
     }
 
     private LogicalExpression parseStringExpression(String beliefString) {
-        System.out.println("Im called Bitch! " + beliefString);
+        //System.out.println("Im called Bitch! " + beliefString);
         // Base case
         if(beliefString.length() == 1) {
             Symbol symbol = new Symbol(beliefString);
@@ -86,7 +86,8 @@ public class InputParser {
                     }
                     if(i >= charArr.length - 1) {
                         beliefString = beliefString.substring(1, beliefString.length()-1);
-                        return parseStringExpression(beliefString);
+                        Parenthesis parenthesis = new Parenthesis(parseStringExpression(beliefString));
+                        return parenthesis;
                     }
                 break;
             }

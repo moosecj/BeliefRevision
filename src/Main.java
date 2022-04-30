@@ -83,13 +83,15 @@ public class Main {
         for (LogicalExpression item : LEset) {
             System.out.println(item.toString());
         }
-        // while(true){
-        //     LEset = logicalExpressionParser();
-        //     System.out.println("Parser");
-        //     for (LogicalExpression item : LEset) {
-        //         System.out.println(item.toString());
-        //     }
-        // }
+
+
+        while(true){
+            LEset = logicalExpressionParser();
+            System.out.println("Parser");
+            for (LogicalExpression item : LEset) {
+                System.out.println(item.toString());
+            }
+        }
         
     }
 
@@ -99,10 +101,13 @@ public class Main {
 
         // Print outs
         System.out.println("Please enter a belief base. \nThe Syntax is as following (Syntax definition = syntax example):\nSymbol = p\nNot Symbol = !p\nSymbol and Symbol = p AND q\nSymbol or Symbol = p OR q\nSymbol Implies Symbol = p -> q\nSymbol Biimples Symbol = p <-> q");
-        System.out.println("An example could be 'p, p -> q' or p, p -> (q AND r)");
+        System.out.println("An example could be 'p, p -> q' or 'p, p -> (q AND r)'");
 
         String userInput = scanner.nextLine();
         userInput = userInput.replaceAll("\\s+","");
+
+        if(userInput.toLowerCase() == "exit") {System.out.println("HEJ"); System.exit(0); }
+
         String[] BeliefBase = userInput.split(",");
 
         InputParser inputParser = new InputParser();
