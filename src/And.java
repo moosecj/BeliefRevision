@@ -17,6 +17,13 @@ public class And implements LogicalExpression {
         return false;
     }
 
+    public LogicalExpression getLogicalExpression1() {
+        return this.LE1;
+    }
+    public LogicalExpression getLogicalExpression2() {
+        return this.LE2;
+    }
+
     @Override
     public int getRank() {
         // TODO Auto-generated method stub

@@ -21,6 +21,10 @@ public class Not implements LogicalExpression {
         return this.rank;
     }
 
+    public LogicalExpression getLogicalExpression() {
+        return this.LE;
+    }
+
     @Override
     public String toString(){
         return "!" + LE.toString();

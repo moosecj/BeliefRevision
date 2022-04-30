@@ -111,6 +111,10 @@ public class Main {
             for (LogicalExpression item : LEset) {
                 System.out.println(item.toString());
             }
+            LogicalExpression letester = CNFConverter.removeImplicationAndBi(LEset.get(0));
+            System.out.println("After remove implications " + letester.toString());
+            letester = CNFConverter.moveNotInvards(letester, 0);
+            System.out.println("After remove nots " + letester.toString());
         }
         
     }

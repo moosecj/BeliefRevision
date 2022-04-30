@@ -17,6 +17,15 @@ public class Implication implements LogicalExpression {
         return false;
     }
 
+    public LogicalExpression getLogicalExpression1() {
+        // TODO Auto-generated method stub
+        return this.LE1;
+    }
+    public LogicalExpression getLogicalExpression2() {
+        // TODO Auto-generated method stub
+        return this.LE2;
+    }
+    
     @Override
     public int getRank() {
         // TODO Auto-generated method stub
