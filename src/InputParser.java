@@ -10,16 +10,9 @@ public class InputParser {
 
         ArrayList<LogicalExpression> returnList = new ArrayList<LogicalExpression>();
 
-        //[p,p->q]
         for (String item : beliefBaseStringArr) {
             returnList.add(parseStringExpression(item));
         }
-
-        /*
-        p->q = Implication(parseInput(p), parseInput(q));
-        */
-
-
         return returnList;
     }
 

@@ -56,7 +56,7 @@ public class Main {
         Symbol p = new Symbol("p");
         Symbol q = new Symbol("q");
         Symbol s = new Symbol("s");
-        Implication pthenq = new Implication(p, q);
+        LogicalExpression pthenq = new Implication(p, q);
 
         System.out.println(pthenq + " contains " + p + ": " + pthenq.contains(p));
         
@@ -85,7 +85,28 @@ public class Main {
 
 
         while(true){
-            LEset = logicalExpressionParser();
+            Scanner scanner = new Scanner(System.in);
+            // Print outs
+            System.out.println("Please enter a belief base. \nThe Syntax is as following (Syntax definition = syntax example):\nSymbol = p\nNot Symbol = !p\nSymbol and Symbol = p AND q\nSymbol or Symbol = p OR q\nSymbol Implies Symbol = p -> q\nSymbol Biimples Symbol = p <-> q");
+            System.out.println("An example could be 'p, p -> q' or 'p, p -> (q AND r)'");
+            
+            // Get beliefbase
+            String userInput = scanner.nextLine();
+            userInput = userInput.replaceAll("\\s+","");
+
+            if(userInput.toLowerCase().equals("exit")) { System.exit(0); }
+
+            String[] beliefBase = userInput.split(",");
+
+            // Get belief change
+            System.out.println("Input a belief change.");
+            userInput = scanner.nextLine();
+            userInput = userInput.replaceAll("\\s+","");
+            if(userInput.contains(",")) { System.out.println("The belief change can only be a singular belief!"); continue; }
+            System.out.println(userInput);
+            String[] beliefChange = new String[]{userInput};
+
+            LEset = logicalExpressionParser(beliefBase, beliefChange);
             System.out.println("Parser");
             for (LogicalExpression item : LEset) {
                 System.out.println(item.toString());
@@ -94,25 +115,35 @@ public class Main {
         
     }
 
-    private static ArrayList<LogicalExpression> logicalExpressionParser() {
-        Scanner scanner = new Scanner(System.in);
+    private static ArrayList<LogicalExpression> logicalExpressionParser(String[] beliefBase, String[] _beliefChange) {
         ArrayList<LogicalExpression> LEset = new ArrayList<LogicalExpression>();
 
-        // Print outs
-        System.out.println("Please enter a belief base. \nThe Syntax is as following (Syntax definition = syntax example):\nSymbol = p\nNot Symbol = !p\nSymbol and Symbol = p AND q\nSymbol or Symbol = p OR q\nSymbol Implies Symbol = p -> q\nSymbol Biimples Symbol = p <-> q");
-        System.out.println("An example could be 'p, p -> q' or 'p, p -> (q AND r)'");
-
-        String userInput = scanner.nextLine();
-        userInput = userInput.replaceAll("\\s+","");
-
-        if(userInput.toLowerCase().equals("exit")) { System.exit(0); }
-
-        String[] BeliefBase = userInput.split(",");
-
         InputParser inputParser = new InputParser();
-        LEset = inputParser.parseInput(BeliefBase);
+        LEset = inputParser.parseInput(beliefBase);
 
+        ArrayList<LogicalExpression> beliefChangeArr = inputParser.parseInput(_beliefChange);
+        LogicalExpression beliefChange = beliefChangeArr.get(0);
         
+        BeliefRevisionAgent brAgent = new BeliefRevisionAgent(LEset);
+
+        System.out.println("BEFORE");
+        for (LogicalExpression item : LEset) {
+            System.out.println(item.toString());
+        }
+
+        System.out.println("ADDITION");
+        LEset = brAgent.expand(LEset, beliefChange);
+
+
+        /*System.out.println("CONTRACTION");
+        ArrayList<LogicalExpression> LEsetContract = brAgent.contract(LEset, beliefChange);
+
+        for (LogicalExpression item : LEsetContract) {
+            System.out.println(item.toString());
+        }*/
+
+
+
         // for(int i = 0; i < BeliefBases.length; i++){
         //     switch(BeliefBases[i]){
         //         case true:

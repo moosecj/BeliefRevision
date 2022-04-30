@@ -9,25 +9,31 @@ public class BeliefRevisionAgent {
     }
 
 
-    public ArrayList<LogicalExpression> revise(ArrayList<LogicalExpression> Beliefbase, LogicalExpression le) {
+    public ArrayList<LogicalExpression> revise(ArrayList<LogicalExpression> beliefBase, LogicalExpression le) {
         if (le == null) {
             // do ting
         }
         return null;
     }
 
-    public ArrayList<LogicalExpression> contract(ArrayList<LogicalExpression> Beliefbase, LogicalExpression le) {
-        for (LogicalExpression logicalExpression : Beliefbase) {
+    public ArrayList<LogicalExpression> contract(ArrayList<LogicalExpression> beliefBase, LogicalExpression le) {
+        for (LogicalExpression logicalExpression : beliefBase) {
             if(logicalExpression.contains(le)){
-                Beliefbase.remove(logicalExpression);
+                beliefBase.remove(logicalExpression);
             }
         }
-        return null;
+        return beliefBase;
     }
 
-    public ArrayList<LogicalExpression> expand(ArrayList<LogicalExpression> Beliefbase, LogicalExpression le) {
-        if (!Beliefbase.contains(le)) Beliefbase.add(le);
-        return Beliefbase;
+    public ArrayList<LogicalExpression> expand(ArrayList<LogicalExpression> beliefBase, LogicalExpression le) {
+        boolean check = false;
+        for (LogicalExpression logicalExpression : beliefBase) {
+            if(logicalExpression.toString().equals(le.toString())){
+                check = true;
+            }
+        }
+        if (!check) { beliefBase.add(le); }
+        return beliefBase;
     }
 
     public ArrayList<LogicalExpression> getBase() {

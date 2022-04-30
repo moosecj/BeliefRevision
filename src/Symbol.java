@@ -9,7 +9,7 @@ public class Symbol implements LogicalExpression {
 
     @Override
     public boolean contains(LogicalExpression containsLE){
-        if(this.name == containsLE.toString()){
+        if(this.name.contains(containsLE.toString())){
             return true;
         }
         return false;
