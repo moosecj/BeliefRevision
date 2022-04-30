@@ -115,6 +115,8 @@ public class Main {
             System.out.println("After remove implications " + letester.toString());
             letester = CNFConverter.moveNotInvards(letester, 0);
             System.out.println("After remove nots " + letester.toString());
+            letester = CNFConverter.distributeOrInwards(letester);
+            System.out.println("After remove nots " + letester.toString());
         }
         
     }

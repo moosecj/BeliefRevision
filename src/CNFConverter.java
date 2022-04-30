@@ -26,6 +26,10 @@ public class CNFConverter {
         }
         if(le instanceof Parenthesis){
             System.out.println("Parenth");
+            LogicalExpression tempLe = ((Parenthesis)le).getLogicalExpression();
+            if(tempLe instanceof Parenthesis){
+                return removeImplicationAndBi(((Parenthesis )le).getLogicalExpression());
+            }
             return new Parenthesis( removeImplicationAndBi(((Parenthesis )le).getLogicalExpression()));
         }
         if(le instanceof Not){
@@ -118,6 +122,40 @@ public class CNFConverter {
             System.out.println("OR");
             LogicalExpression le1 = distributeOrInwards(((Or )le).getLogicalExpression1());
             LogicalExpression le2 = distributeOrInwards(((Or )le).getLogicalExpression2());
+            if(le1 instanceof Parenthesis){
+                if(le2 instanceof Parenthesis){
+                    return new Or(le1,le2);
+                }
+                LogicalExpression tempLe = ((Parenthesis)le1).getLogicalExpression();
+                if(tempLe instanceof And){
+                    LogicalExpression ret1 = new Or(le2,((And)tempLe).getLogicalExpression1());
+                    LogicalExpression ret2 = new Or(le2,((And)tempLe).getLogicalExpression2());
+                    return new And(new Parenthesis(ret1),new Parenthesis(ret2));
+                } 
+                return new Or(le1,le2);
+
+
+                
+            }
+            if(le2 instanceof Parenthesis){
+                if(le1 instanceof Parenthesis){
+                    return new Or(le1,le2);
+                }
+                System.out.println("we here?" + le1.getClass());
+                // P ∨ ( Q ∧ R )
+                // ( P ∨ Q ) ∧ ( P ∨ R )
+                LogicalExpression tempLe = ((Parenthesis)le2).getLogicalExpression();
+                if( tempLe instanceof And){
+                    LogicalExpression ret1 = new Or(le1,((And)tempLe).getLogicalExpression1());
+                    LogicalExpression ret2 = new Or(le1,((And)tempLe).getLogicalExpression2());
+                    return new And(new Parenthesis(ret1),new Parenthesis(ret2));
+                } 
+                return new Or(le1,le2);
+            }
+
+
+
+
             return new Or(le1,le2);
         }
         if(le instanceof Parenthesis){
