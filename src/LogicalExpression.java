@@ -5,5 +5,7 @@ public interface LogicalExpression {
     public String toString();
 
     public int getRank();
+
+    //public LogicalExpression getLogicalExpression();
     
 }

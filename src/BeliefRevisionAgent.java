@@ -17,11 +17,15 @@ public class BeliefRevisionAgent {
     }
 
     public ArrayList<LogicalExpression> contract(ArrayList<LogicalExpression> beliefBase, LogicalExpression le) {
+        System.out.println("CONTRACT WITH: " + le.toString());
+        ArrayList<LogicalExpression> valuesToRemove = new ArrayList<>();
         for (LogicalExpression logicalExpression : beliefBase) {
             if(logicalExpression.contains(le)){
-                beliefBase.remove(logicalExpression);
+                valuesToRemove.add(logicalExpression);
+                //beliefBase.remove(logicalExpression);
             }
         }
+        beliefBase.removeAll(valuesToRemove);
         return beliefBase;
     }
 

@@ -16,7 +16,7 @@ public class Implication implements LogicalExpression {
         }
         return false;
     }
-
+    
     public LogicalExpression getLogicalExpression1() {
         // TODO Auto-generated method stub
         return this.LE1;

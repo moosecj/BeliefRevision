@@ -87,9 +87,10 @@ public class Main {
         while(true){
             Scanner scanner = new Scanner(System.in);
             // Print outs
-            System.out.println("Please enter a belief base. \nThe Syntax is as following (Syntax definition = syntax example):\nSymbol = p\nNot Symbol = !p\nSymbol and Symbol = p AND q\nSymbol or Symbol = p OR q\nSymbol Implies Symbol = p -> q\nSymbol Biimples Symbol = p <-> q");
-            System.out.println("An example could be 'p, p -> q' or 'p, p -> (q AND r)'");
-            
+            //System.out.println("Please enter a belief base. \nThe Syntax is as following (Syntax definition = syntax example):\nSymbol = p\nNot Symbol = !p\nSymbol and Symbol = p AND q\nSymbol or Symbol = p OR q\nSymbol Implies Symbol = p -> q\nSymbol Biimples Symbol = p <-> q");
+            //System.out.println("An example could be 'p, p -> q' or 'p, p -> (q AND r)'");
+            System.out.println("Please enter a belief base:");
+
             // Get beliefbase
             String userInput = scanner.nextLine();
             userInput = userInput.replaceAll("\\s+","");
@@ -118,7 +119,7 @@ public class Main {
 
             System.out.println("CNF form: " + letester.toString());
         }
-        
+        // !p, p->q = !q, q?
     }
 
     private static ArrayList<LogicalExpression> logicalExpressionParser(String[] beliefBase, String[] _beliefChange) {
@@ -138,6 +139,8 @@ public class Main {
         }
 
         System.out.println("ADDITION");
+        //String w = (beliefChange instanceof Not) ? "1" : "2";
+        LEset = brAgent.contract(LEset, (beliefChange instanceof Not) ? ((Not) beliefChange).getLogicalExpression() : new Not(beliefChange));
         LEset = brAgent.expand(LEset, beliefChange);
 
 
