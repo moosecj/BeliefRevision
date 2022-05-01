@@ -117,6 +117,10 @@ public class Main {
             for (LogicalExpression item : LEset) {
                 System.out.println(item.toString());
             }
+            BaseChecker bc = new BaseChecker();
+            ArrayList<String> symb = bc.getSymbols(LEset);
+            bc.fillTruthTable(symb, LEset);
+            bc.checkBase(LEset, symb);
         }
         // !p, p->q = !q, q?
     }
