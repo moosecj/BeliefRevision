@@ -1,5 +1,5 @@
 import java.lang.reflect.AnnotatedTypeVariable;
-
+import java.util.*;
 import javax.sound.midi.Synthesizer;
 import javax.xml.crypto.dsig.keyinfo.RetrievalMethod;
 
@@ -7,6 +7,36 @@ public class CNFConverter {
     //https://en.wikipedia.org/wiki/Conjunctive_normal_form
     //https://en.wikipedia.org/wiki/De_Morgan%27s_laws
     
+    public static ArrayList<LogicalExpression> cNFConverter(ArrayList<LogicalExpression> LEset){
+        ArrayList<LogicalExpression> convertedBeleifBase = new ArrayList<LogicalExpression>();
+
+        for (LogicalExpression logicalExpression : LEset) {
+            LogicalExpression letester = CNFConverter.removeImplicationAndBi(logicalExpression);
+            letester = CNFConverter.moveNotInvards(letester, 0);
+            letester = CNFConverter.distributeOrInwards(letester);
+            convertedBeleifBase.add(letester);
+        }
+
+        ArrayList<LogicalExpression> convertedBeleifBaseAndCleaned = new ArrayList<LogicalExpression>();
+
+        for (LogicalExpression logicalExpression : convertedBeleifBase) {
+            if(logicalExpression instanceof Parenthesis){
+                convertedBeleifBaseAndCleaned.add(((Parenthesis)logicalExpression).getLogicalExpression());
+
+            }else if(logicalExpression instanceof And){
+                convertedBeleifBaseAndCleaned.add(((And)logicalExpression).getLogicalExpression1());
+                convertedBeleifBaseAndCleaned.add(((And)logicalExpression).getLogicalExpression2());
+            }else{
+                convertedBeleifBaseAndCleaned.add(logicalExpression);
+            }
+        }
+        convertedBeleifBaseAndCleaned = removeDuplicates(convertedBeleifBaseAndCleaned);
+
+        return convertedBeleifBaseAndCleaned;
+
+    }
+
+
     public static LogicalExpression removeImplicationAndBi(LogicalExpression le){
         if(le instanceof Symbol){
             return le;
@@ -149,6 +179,20 @@ public class CNFConverter {
             return new Not( distributeOrInwards(((Not )le).getLogicalExpression()));
         }
         return null;
+    }
+
+
+    //Implemnetation based on https://www.geeksforgeeks.org/how-to-remove-duplicates-from-arraylist-in-java/
+    public static ArrayList<LogicalExpression> removeDuplicates(ArrayList<LogicalExpression> LEset)
+    {
+        ArrayList<LogicalExpression> newLEset = new ArrayList<LogicalExpression>();
+        for (LogicalExpression element : LEset) {
+
+            if (!newLEset.contains(element)) {
+                newLEset.add(element);
+            }
+        }
+        return newLEset;
     }
 
 }
