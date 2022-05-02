@@ -6,6 +6,8 @@ public interface LogicalExpression {
 
     public int getRank();
 
+    public void setRank(int rank);
+
     //public LogicalExpression getLogicalExpression();
     
 }

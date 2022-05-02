@@ -99,7 +99,7 @@ public class BaseChecker {
             rankSum[row] = 0;
             for(int i = 0; i < boolVal.length;i++){
                 if(boolVal[i]==false){
-                    rankSum[row] += 100 - LEset.get(i).getRank();
+                    rankSum[row] += 10 - LEset.get(i).getRank();
                 }
             }
 

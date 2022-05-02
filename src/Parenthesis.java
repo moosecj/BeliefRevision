@@ -21,6 +21,12 @@ public class Parenthesis implements LogicalExpression {
         return this.rank;
     }
 
+    @Override
+    public void setRank(int _rank) {
+        // TODO Auto-generated method stub
+        this.rank = _rank;
+    }
+
     public LogicalExpression getLogicalExpression() {
         return this.LE;
     }

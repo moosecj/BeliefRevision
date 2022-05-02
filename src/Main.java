@@ -105,15 +105,32 @@ public class Main {
             System.out.println("Input a belief change.");
             userInput = scanner.nextLine();
             userInput = userInput.replaceAll("\\s+","");
-            if(userInput.contains(",")) { System.out.println("The belief change can only be a singular belief!"); continue; }
-            System.out.println(userInput);
-            String[] beliefChange = new String[]{userInput};
+            //if(userInput.contains(",")) { System.out.println("The belief change can only be a singular belief!"); continue; }
+            String[] beliefChange = userInput.split(",");
 
-            LEset = logicalExpressionParser(beliefBase, beliefChange);
-            System.out.println("Parser");
-            for (LogicalExpression item : LEset) {
-                System.out.println(item.toString());
+
+            // Check for rank input
+            if(beliefChange.length == 2) {
+                try {
+                    int rank = Integer.parseInt(beliefChange[1]);
+                    logicalExpressionParserWithRank(beliefBase, beliefChange, rank);
+                    
+                } catch (NumberFormatException e) {
+                    System.out.println("Rank must be of type int!");
+                    continue;
+                }
+            } else if(beliefChange.length <= 1) {
+                logicalExpressionParser(beliefBase, beliefChange);
+            } else {
+                System.out.println("Belief change must be either singular or of type: expression, rank");
             }
+
+            //logicalExpressionParser(beliefBase, beliefChange);
+
+            /*
+
+            p, !q, q -> p, !p
+
             ArrayList<LogicalExpression> LEsetCNF = CNFConverter.cNFConverter(LEset);
             System.out.println("Converted:");
             for (LogicalExpression item : LEsetCNF) {
@@ -133,7 +150,7 @@ public class Main {
             for (LogicalExpression item : LEset) {
                 System.out.println(item.toString());
             }
-
+            */
         }
         // !p, p->q = !q, q?
     }
@@ -145,20 +162,29 @@ public class Main {
         LEset = inputParser.parseInput(beliefBase);
 
         ArrayList<LogicalExpression> beliefChangeArr = inputParser.parseInput(_beliefChange);
+
+        //if(beliefChangeArr.size() > 2) { System.out.println("The belief change can only be a singular belief!"); return null; }
+
         LogicalExpression beliefChange = beliefChangeArr.get(0);
+
+        
+        //beliefChange.setRank(0);
+
         
         BeliefRevisionAgent brAgent = new BeliefRevisionAgent(LEset);
 
-        System.out.println("BEFORE");
-        for (LogicalExpression item : LEset) {
-            System.out.println(item.toString());
-        }
+        // System.out.println("BEFORE");
+        // for (LogicalExpression item : LEset) {
+        //     System.out.println(item.toString());
+        // }
 
-        System.out.println("Revision");
         //String w = (beliefChange instanceof Not) ? "1" : "2";
         //LEset = brAgent.contract(LEset, (beliefChange instanceof Not) ? ((Not) beliefChange).getLogicalExpression() : new Not(beliefChange));
         //LEset = brAgent.expand(LEset, beliefChange);
         LEset = brAgent.revise(beliefChange);
+        System.out.println("Revised belief base:");
+
+        brAgent.print();
 
         /*System.out.println("CONTRACTION");
         ArrayList<LogicalExpression> LEsetContract = brAgent.contract(LEset, beliefChange);
@@ -177,6 +203,32 @@ public class Main {
         //         Symbol S = new Symbol(b, rank)
             
         // }
+        
+        return LEset;
+
+    }
+
+    private static ArrayList<LogicalExpression> logicalExpressionParserWithRank(String[] beliefBase, String[] _beliefChange, int rank) {
+        ArrayList<LogicalExpression> LEset = new ArrayList<LogicalExpression>();
+
+        InputParser inputParser = new InputParser();
+        LEset = inputParser.parseInput(beliefBase);
+
+        ArrayList<LogicalExpression> beliefChangeArr = inputParser.parseInput(_beliefChange);
+
+        LogicalExpression beliefChange = beliefChangeArr.get(0);
+        beliefChange.setRank(rank);
+
+        BeliefRevisionAgent brAgent = new BeliefRevisionAgent(LEset);
+
+        LEset = brAgent.revise(beliefChange);
+        System.out.println("Revised belief base:");
+
+        for (LogicalExpression l : brAgent.getBase()) {
+            System.out.println(l.toString() + ", " + l.getRank());
+        }
+
+        brAgent.print();
         
         return LEset;
 

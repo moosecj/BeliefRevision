@@ -13,21 +13,33 @@ public class BeliefRevisionAgent {
         //ArrayList<LogicalExpression> returnBase = new ArrayList<LogicalExpression>();
         //returnBase = contract(beliefBase, (le instanceof Not) ? ((Not) le).getLogicalExpression() : new Not(le));
         //returnBase = expand(returnBase, le);
-        this.beliefBase = contract((le instanceof Not) ? ((Not) le).getLogicalExpression() : new Not(le));
         this.beliefBase = expand(le);
+        this.beliefBase = contract((le instanceof Not) ? ((Not) le).getLogicalExpression() : new Not(new Parenthesis(le)));
         return this.beliefBase;
     }
 
     public ArrayList<LogicalExpression> contract(LogicalExpression le) {
-        System.out.println("CONTRACT WITH: " + le.toString());
-        ArrayList<LogicalExpression> valuesToRemove = new ArrayList<>();
+        //System.out.println("CONTRACT WITH: " + le.toString());
+        /*ArrayList<LogicalExpression> valuesToRemove = new ArrayList<>();
         for (LogicalExpression logicalExpression : this.beliefBase) {
             if(logicalExpression.contains(le)){
                 valuesToRemove.add(logicalExpression);
                 //beliefBase.remove(logicalExpression);
             }
         }
-        this.beliefBase.removeAll(valuesToRemove);
+        this.beliefBase.removeAll(valuesToRemove);*/
+
+        ArrayList<LogicalExpression> LEsetCNF = CNFConverter.cNFConverter(this.beliefBase);
+        BaseChecker bc = new BaseChecker();
+        ArrayList<String> symb = bc.getSymbols(LEsetCNF);
+        bc.fillTruthTable(symb, LEsetCNF);
+        boolean consistent = bc.checkBase(LEsetCNF, symb);
+        if(!consistent){
+            ArrayList<Integer> toRet = bc.cleanBase(this.beliefBase, symb);
+            for (int i = 0; i < toRet.size(); i++) {
+                this.beliefBase.remove(toRet.get(i)-i);
+            }
+        }
         return this.beliefBase;
     }
 

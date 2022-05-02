@@ -31,6 +31,12 @@ public class Biimplication implements LogicalExpression {
         // TODO Auto-generated method stub
         return this.rank;
     }
+    
+    @Override
+    public void setRank(int _rank) {
+        // TODO Auto-generated method stub
+        this.rank = _rank;
+    }
 
     @Override
     public String toString(){
