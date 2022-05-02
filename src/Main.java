@@ -76,13 +76,15 @@ public class Main {
 
         BeliefRevisionAgent brAgent = new BeliefRevisionAgent(LEset);
 
-        brAgent.contract(LEset, q);
+        brAgent.contract(q);
 
         System.out.println("AFTER CONTRACT");
         for (LogicalExpression item : LEset) {
             System.out.println(item.toString());
         }
 
+        AGMPostulates agm = new AGMPostulates();
+        
 
         while(true){
             Scanner scanner = new Scanner(System.in);
@@ -141,11 +143,11 @@ public class Main {
             System.out.println(item.toString());
         }
 
-        System.out.println("ADDITION");
+        System.out.println("Revision");
         //String w = (beliefChange instanceof Not) ? "1" : "2";
-        LEset = brAgent.contract(LEset, (beliefChange instanceof Not) ? ((Not) beliefChange).getLogicalExpression() : new Not(beliefChange));
-        LEset = brAgent.expand(LEset, beliefChange);
-
+        //LEset = brAgent.contract(LEset, (beliefChange instanceof Not) ? ((Not) beliefChange).getLogicalExpression() : new Not(beliefChange));
+        //LEset = brAgent.expand(LEset, beliefChange);
+        LEset = brAgent.revise(beliefChange);
 
         /*System.out.println("CONTRACTION");
         ArrayList<LogicalExpression> LEsetContract = brAgent.contract(LEset, beliefChange);
