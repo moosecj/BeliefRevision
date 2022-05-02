@@ -199,14 +199,14 @@ public class AGMPostulates {
     // Consistency: B * p is consistent if p is consistent (No contradictions)
     public void checkConsistency() {
         Symbol q = new Symbol("q");
-        Symbol p = new Symbol("p");
-        Not notp = new Not(p);
-        notp.setRank(-10);
+        Symbol r = new Symbol("r");
+        Not notr = new Not(r);
+        notr.setRank(-10);
 
         beliefRevisionAgent.setBeliefBase(testBeliefBase);
         System.out.println("Initial Belief Base");
         beliefRevisionAgent.print();
-        ArrayList<LogicalExpression> consistantRevisedBase = new ArrayList<>(beliefRevisionAgent.revise(notp));
+        ArrayList<LogicalExpression> consistantRevisedBase = new ArrayList<>(beliefRevisionAgent.revise(notr));
         System.out.println("Consistant Revised Belief Base");
         beliefRevisionAgent.print();
 
@@ -233,6 +233,9 @@ public class AGMPostulates {
         Biimplication biimp1 = new Biimplication(p, notr);
         Biimplication biimp2 = new Biimplication(notr, p);
 
+        biimp1.setRank(-10);
+        biimp2.setRank(-10);
+
         beliefRevisionAgent.setBeliefBase(testBeliefBase);
         System.out.println("Initial Belief Base");
         beliefRevisionAgent.print();
@@ -246,7 +249,7 @@ public class AGMPostulates {
         beliefRevisionAgent.print();
 
         for(int i = 0; i < revisedBase1.size(); i++) {
-            if(!(revisedBase1.get(i).toString().equals(revisedBase2.get(i).toString()))) {
+            if(!(revisedBase1.get(i).toString().equals(revisedBase2.get(i).toString())) && (revisedBase1.get(i) != biimp1 || revisedBase2.get(i) != biimp2)) {
                 System.out.println("Extensionality check failed. " + revisedBase1.get(i).toString() + " , " + revisedBase2.get(i).toString());
                 return;
             }
