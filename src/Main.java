@@ -114,12 +114,15 @@ public class Main {
             for (LogicalExpression item : LEset) {
                 System.out.println(item.toString());
             }
-
-            LogicalExpression letester = CNFConverter.removeImplicationAndBi(LEset.get(0));
-            letester = CNFConverter.moveNotInvards(letester, 0);
-            letester = CNFConverter.distributeOrInwards(letester);
-
-            System.out.println("CNF form: " + letester.toString());
+            LEset = CNFConverter.cNFConverter(LEset);
+            System.out.println("Converted:");
+            for (LogicalExpression item : LEset) {
+                System.out.println(item.toString());
+            }
+            BaseChecker bc = new BaseChecker();
+            ArrayList<String> symb = bc.getSymbols(LEset);
+            bc.fillTruthTable(symb, LEset);
+            bc.checkBase(LEset, symb);
         }
         // !p, p->q = !q, q?
     }
