@@ -13,7 +13,7 @@ For a not operation: !φ
 For an or operation: φ OR ψ
 For an and operation: φ AND ψ
 For an implication: φ -> ψ
-for a biimplication: φ <-> ψ
+For a biimplication: φ <-> ψ
 For a paranthesis: (φ)
 
 An example could be 'p, p -> q' or 'p, p -> (q AND r)'
