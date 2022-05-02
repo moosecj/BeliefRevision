@@ -31,6 +31,7 @@ public class Main {
                     System.out.println("'agm' - this runs the agm test and prints the output");
                     System.out.println("'reset' - this prompts the user to start over with a new beleif base");
                     System.out.println("'exit' - terminates the program");
+                    continue;
                 }
 
                 String[] beliefBase = userInput.split(",");
@@ -52,6 +53,15 @@ public class Main {
             if(userInput.toLowerCase().equals("agm")) { AGMPostulates agm = new AGMPostulates(); continue; }
             
             if(userInput.toLowerCase().equals("reset")) {reset = true; continue; }
+
+            if(userInput.toLowerCase().equals("help")) {
+                System.out.println("The Syntax is as following (Syntax definition = syntax example):\nSymbol = p\nNot Symbol = !p\nSymbol and Symbol = p AND q\nSymbol or Symbol = p OR q\nSymbol Implies Symbol = p -> q\nSymbol Biimples Symbol = p <-> q");
+                System.out.println("An example could be 'p, p -> q' or 'p, p -> (q AND r)'");
+                System.out.println("'agm' - this runs the agm test and prints the output");
+                System.out.println("'reset' - this prompts the user to start over with a new beleif base");
+                System.out.println("'exit' - terminates the program");
+                continue;
+            }
         
             String[] beliefChange = userInput.split(",");
 
