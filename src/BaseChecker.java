@@ -92,6 +92,38 @@ public class BaseChecker {
         return false;
     }
 
+    public ArrayList<Integer> cleanBase(ArrayList<LogicalExpression> LEset, ArrayList<String> symbolList){
+        int[] rankSum = new int[truthTable.length];
+        for (int row = 0; row < truthTable.length; row++) {
+            boolean[] boolVal = Arrays.copyOfRange(truthTable[row], symbolList.size(),symbolList.size()+LEset.size());
+            rankSum[row] = 0;
+            for(int i = 0; i < boolVal.length;i++){
+                if(boolVal[i]==false){
+                    rankSum[row] += 100 - LEset.get(i).getRank();
+                }
+            }
+
+        }
+
+        int lowestIndex = 0;
+        for(int i = 0; i < rankSum.length;i++){
+            if(rankSum[lowestIndex]>rankSum[i]){
+                lowestIndex = i;
+            }
+        }
+        System.out.println(lowestIndex);
+
+        ArrayList<Integer> toRet = new ArrayList<Integer>();
+        boolean[] boolVal = Arrays.copyOfRange(truthTable[lowestIndex], symbolList.size(),symbolList.size()+LEset.size());
+        for(int i = 0; i < boolVal.length;i++){
+            if(!boolVal[i]){
+                toRet.add(i);
+            }
+        }
+
+        return toRet;
+    }
+
 
     public boolean tryLeSet(LogicalExpression le, boolean[] truthValues, ArrayList<String> symbols){
 

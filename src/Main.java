@@ -114,15 +114,26 @@ public class Main {
             for (LogicalExpression item : LEset) {
                 System.out.println(item.toString());
             }
-            LEset = CNFConverter.cNFConverter(LEset);
+            ArrayList<LogicalExpression> LEsetCNF = CNFConverter.cNFConverter(LEset);
             System.out.println("Converted:");
-            for (LogicalExpression item : LEset) {
+            for (LogicalExpression item : LEsetCNF) {
                 System.out.println(item.toString());
             }
             BaseChecker bc = new BaseChecker();
-            ArrayList<String> symb = bc.getSymbols(LEset);
-            bc.fillTruthTable(symb, LEset);
-            boolean consistent = bc.checkBase(LEset, symb);
+            ArrayList<String> symb = bc.getSymbols(LEsetCNF);
+            bc.fillTruthTable(symb, LEsetCNF);
+            boolean consistent = bc.checkBase(LEsetCNF, symb);
+            if(!consistent){
+                ArrayList<Integer> toRet = bc.cleanBase(LEsetCNF, symb);
+                for (int i = 0; i < toRet.size(); i++) {
+                    LEset.remove(toRet.get(i)-i);
+                }
+            }
+            System.out.println("After clean:");
+            for (LogicalExpression item : LEset) {
+                System.out.println(item.toString());
+            }
+
         }
         // !p, p->q = !q, q?
     }

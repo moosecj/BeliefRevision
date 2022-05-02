@@ -23,9 +23,9 @@ public class CNFConverter {
             if(logicalExpression instanceof Parenthesis){
                 convertedBeleifBaseAndCleaned.add(((Parenthesis)logicalExpression).getLogicalExpression());
 
-            }else if(logicalExpression instanceof And){
-                convertedBeleifBaseAndCleaned.add(((And)logicalExpression).getLogicalExpression1());
-                convertedBeleifBaseAndCleaned.add(((And)logicalExpression).getLogicalExpression2());
+            // }else if(logicalExpression instanceof And){
+            //     convertedBeleifBaseAndCleaned.add(((And)logicalExpression).getLogicalExpression1());
+            //     convertedBeleifBaseAndCleaned.add(((And)logicalExpression).getLogicalExpression2());
             }else{
                 convertedBeleifBaseAndCleaned.add(logicalExpression);
             }
