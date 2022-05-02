@@ -8,12 +8,13 @@ You will then be prompted to enter a belief base, however you can also enter one
     help - prints out he syntax for beliefs
 
 When entering a belief base, you have to adhere to the following syntax:
-For a symbol: φ 
-For a not operation: !φ
-For an or operation: φ OR ψ
-For an and operation: φ AND ψ
-For an implication: φ -> ψ
-for a biimplication: φ <-> ψ
-For a paranthesis: (φ)
+
+    For a symbol: φ 
+    For a not operation: !φ
+    For an or operation: φ OR ψ
+    For an and operation: φ AND ψ
+    For an implication: φ -> ψ
+    For a biimplication: φ <-> ψ
+    For a paranthesis: (φ)
 
 An example could be 'p, p -> q' or 'p, p -> (q AND r)'
