@@ -87,7 +87,6 @@ public class BeliefRevisionAgent {
         for (LogicalExpression logicalExpression : beliefBase) {
             if(logicalExpression instanceof Implication){
                 if(this.contains(beliefBase, (((Implication) logicalExpression).LE1))){
-
                     consequences.add((((Implication) logicalExpression).LE2));
 
                 }else if(this.contains(beliefBase, ((Implication) logicalExpression).LE1)){

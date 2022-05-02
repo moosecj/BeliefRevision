@@ -46,14 +46,6 @@ public class AGMPostulates {
         checkExtensionality();
         System.out.println("========== Extensionality Check End ========== ");
 
-        System.out.println("========== Superexpansion Check Begin ========== ");
-        checkSuperexpansion();
-        System.out.println("========== Superexpansion Check End ========== ");
-
-        System.out.println("========== Subexpansion Check Begin ========== ");
-        checkSubexpansion();
-        System.out.println("========== Subexpansion Check End ========== ");
-
     }
 
     BeliefRevisionAgent beliefRevisionAgent = new BeliefRevisionAgent(null);
@@ -96,7 +88,7 @@ public class AGMPostulates {
         r
         (p OR q) -> r
         q
-        
+
         CONS
         p
         r
@@ -151,16 +143,19 @@ public class AGMPostulates {
     // Inclusion: B * p should be a subset of B + p
     public void checkInclusion() {
         Symbol q = new Symbol("q");
+        Symbol p = new Symbol("p");
+        Not notp = new Not(p);
+        notp.setRank(-10);
 
         beliefRevisionAgent.setBeliefBase(testBeliefBase);
         System.out.println("Initial Belief Base");
         beliefRevisionAgent.print();
-        ArrayList<LogicalExpression> revisedBase = new ArrayList<>(beliefRevisionAgent.revise(q));
+        ArrayList<LogicalExpression> revisedBase = new ArrayList<>(beliefRevisionAgent.revise(notp));
         System.out.println("Revised Belief Base");
         beliefRevisionAgent.print();
 
         beliefRevisionAgent.setBeliefBase(testBeliefBase);
-        ArrayList<LogicalExpression> expandedBase = new ArrayList<>(beliefRevisionAgent.expand(q));
+        ArrayList<LogicalExpression> expandedBase = new ArrayList<>(beliefRevisionAgent.expand(notp));
 
         for(LogicalExpression l : revisedBase) {
             boolean check = false;
@@ -206,8 +201,7 @@ public class AGMPostulates {
         Symbol q = new Symbol("q");
         Symbol p = new Symbol("p");
         Not notp = new Not(p);
-
-
+        notp.setRank(-10);
 
         beliefRevisionAgent.setBeliefBase(testBeliefBase);
         System.out.println("Initial Belief Base");
@@ -260,77 +254,4 @@ public class AGMPostulates {
         System.out.println("Extensionality check succeded.");
     }
 
-    // Superexpansion: B * (p AND q) subset of (B * p) + q
-    public void checkSuperexpansion() {
-        Symbol p = new Symbol("p");
-        Symbol q = new Symbol("q");
-        Not notp = new Not(p);
-        Not notq = new Not(q);
-        And pandq = new And(notp, notq);
-        Parenthesis parenthesis_pandq = new Parenthesis(pandq);
-
-
-        beliefRevisionAgent.setBeliefBase(testBeliefBase);
-        System.out.println("Initial Belief Base");
-        beliefRevisionAgent.print();
-        ArrayList<LogicalExpression> revisedBase = new ArrayList<>(beliefRevisionAgent.revise(parenthesis_pandq));
-        System.out.println("Case: B * " + parenthesis_pandq.toString());
-        beliefRevisionAgent.print();
-        
-        beliefRevisionAgent.setBeliefBase(testBeliefBase);
-        ArrayList<LogicalExpression> revisedBase2 = new ArrayList<>(beliefRevisionAgent.revise(notp));
-        revisedBase2 = beliefRevisionAgent.expand(notq);
-        System.out.println("Case: (B * "+ notp.toString() +") + " + notq.toString());
-        beliefRevisionAgent.print();
-
-        for(LogicalExpression l : revisedBase) {
-            boolean check = false;
-            for(LogicalExpression le : revisedBase2) {
-                if(l.toString().equals(le.toString())) {
-                    check = true;
-                }
-            }
-            if(!check) {
-                System.out.println("Superexpansion check failed.");
-                return;
-            }
-        }
-        System.out.println("Superexpansion check succeded.");
-    }
-
-    // Subexpansion: if !q not in B * p, then (B * p) + q subset in B * (p AND q)
-    public void checkSubexpansion() {
-        Symbol p = new Symbol("p");
-        Symbol q = new Symbol("q");
-        And pandq = new And(p, q);
-        Parenthesis parenthesis_pandq = new Parenthesis(pandq);
-
-
-        beliefRevisionAgent.setBeliefBase(testBeliefBase);
-        System.out.println("Initial Belief Base");
-        beliefRevisionAgent.print();
-        ArrayList<LogicalExpression> revisedBase = new ArrayList<>(beliefRevisionAgent.revise(parenthesis_pandq));
-        System.out.println("Case: B * " + parenthesis_pandq.toString());
-        beliefRevisionAgent.print();
-        
-        beliefRevisionAgent.setBeliefBase(testBeliefBase);
-        ArrayList<LogicalExpression> revisedBase2 = new ArrayList<>(beliefRevisionAgent.revise(p));
-        revisedBase2 = beliefRevisionAgent.expand(q);
-        System.out.println("Case: (B * "+ p.toString() +") + " + q.toString());
-        beliefRevisionAgent.print();
-
-        for(LogicalExpression l : revisedBase2) {
-            boolean check = false;
-            for(LogicalExpression le : revisedBase) {
-                if(l.toString().equals(le.toString())) {
-                    check = true;
-                }
-            }
-            if(!check) {
-                System.out.println("Subexpansion check failed.");
-                return;
-            }
-        }
-        System.out.println("Subexpansion check succeded.");
-    }
 }
