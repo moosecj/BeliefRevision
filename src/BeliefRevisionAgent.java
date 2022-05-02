@@ -82,32 +82,52 @@ public class BeliefRevisionAgent {
 
 
     public ArrayList<LogicalExpression> calculateConsequences(ArrayList<LogicalExpression> beliefBase){
-        BeliefRevisionAgent brAgent = new BeliefRevisionAgent(beliefBase);
-        ArrayList<LogicalExpression> consequences = new ArrayList<LogicalExpression>();
-        for (LogicalExpression logicalExpression : beliefBase) {
-            if(logicalExpression instanceof Implication){
-                if(this.contains(beliefBase, (((Implication) logicalExpression).LE1))){
-                    consequences.add((((Implication) logicalExpression).LE2));
+        // ArrayList<LogicalExpression> consequences = new ArrayList<LogicalExpression>();
+        // for (LogicalExpression logicalExpression : beliefBase) {
+        //     if(logicalExpression instanceof Implication){
+                
+        //             if(((Implication) logicalExpression).LE1 instanceof Or){
+        //                 if(containsSymbol(beliefBase, ((Or) ((Implication) logicalExpression).LE1).LE1) || containsSymbol(beliefBase, ((Or) ((Implication) logicalExpression).LE1).LE2)){
+        //                     consequences.add((((Implication) logicalExpression).LE2));
+        //                 }
+        //             }else if(((Implication) logicalExpression).LE1 instanceof And){
+        //                 if(containsSymbol(beliefBase, ((And) ((Implication) logicalExpression).LE1).LE1) && containsSymbol(beliefBase, ((And) ((Implication) logicalExpression).LE1).LE2)){
+        //                     consequences.add((((Implication) logicalExpression).LE2));
+        //                 }
+        //             }
+                    
+                
+        //     }else if(logicalExpression instanceof Biimplication){
+                
+        //             if(((Implication) logicalExpression).LE1 instanceof Or){
+        //                 if(containsSymbol(beliefBase, ((Or) ((Implication) logicalExpression).LE1).LE1) || containsSymbol(beliefBase, ((Or) ((Implication) logicalExpression).LE1).LE2)){
+        //                     consequences.add((((Implication) logicalExpression).LE2));
+        //                 }
+        //             }else if(((Implication) logicalExpression).LE1 instanceof And){
+        //                 if(containsSymbol(beliefBase, ((And) ((Implication) logicalExpression).LE1).LE1) && containsSymbol(beliefBase, ((And) ((Implication) logicalExpression).LE1).LE2)){
+        //                     consequences.add((((Implication) logicalExpression).LE2));
+        //                 }
+        //             }
+                    
+                
 
-                }else if(this.contains(beliefBase, ((Implication) logicalExpression).LE1)){
-                    consequences.add(((Implication) logicalExpression).LE2);
-                }
-            }else if(logicalExpression instanceof Biimplication){
-                if(this.contains(beliefBase, new Not(((Biimplication) logicalExpression).LE1))){
-                    consequences.add(new Not(((Biimplication) logicalExpression).LE2));
-                }else if(brAgent.contains(beliefBase, ((Biimplication) logicalExpression).LE1)){
-                    consequences.add(((Biimplication) logicalExpression).LE2);
-                }
-
-                if(this.contains(beliefBase, new Not(((Biimplication) logicalExpression).LE2))){
-                    consequences.add(new Not(((Biimplication) logicalExpression).LE1));
-                }else if(this.contains(beliefBase, ((Biimplication) logicalExpression).LE2)){
-                    consequences.add(((Biimplication) logicalExpression).LE1);
-                }
-            }
-            consequences.add(logicalExpression);
-        }
-        return consequences;
+                
+        //             if(((Implication) logicalExpression).LE2 instanceof Or){
+        //                 if(containsSymbol(beliefBase, ((Or) ((Implication) logicalExpression).LE2).LE1) || containsSymbol(beliefBase, ((Or) ((Implication) logicalExpression).LE2).LE2)){
+        //                     consequences.add((((Implication) logicalExpression).LE1));
+        //                 }
+        //             }else if(((Implication) logicalExpression).LE2 instanceof And){
+        //                 if(containsSymbol(beliefBase, ((And) ((Implication) logicalExpression).LE2).LE1) && containsSymbol(beliefBase, ((And) ((Implication) logicalExpression).LE2).LE2)){
+        //                     consequences.add((((Implication) logicalExpression).LE1));
+        //                 }
+        //             }
+                    
+                
+        //     }
+        //     consequences.add(logicalExpression);
+        // }
+        // return consequences;
+        return beliefBase;
     }
 
     public boolean contains(ArrayList<LogicalExpression> beliefBase, LogicalExpression le){
@@ -117,6 +137,18 @@ public class BeliefRevisionAgent {
             }
 
         }
-        return true;
+        return false;
+    }
+
+    public boolean containsSymbol(ArrayList<LogicalExpression> beliefBase, LogicalExpression le){
+        for (LogicalExpression logicalExpression : beliefBase) {
+            System.out.println("LEXPRESSION AND LE " + logicalExpression.toString() + ", " + le.toString());
+            if(logicalExpression.contains(le)){
+                
+                return true;
+            }
+
+        }
+        return false;
     }
 }
