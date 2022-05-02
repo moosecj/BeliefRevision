@@ -79,4 +79,45 @@ public class BeliefRevisionAgent {
         System.out.print("}");
         System.out.println();
     }
+
+
+    public ArrayList<LogicalExpression> calculateConsequences(ArrayList<LogicalExpression> beliefBase){
+        BeliefRevisionAgent brAgent = new BeliefRevisionAgent(beliefBase);
+        ArrayList<LogicalExpression> consequences = new ArrayList<LogicalExpression>();
+        for (LogicalExpression logicalExpression : beliefBase) {
+            if(logicalExpression instanceof Implication){
+                if(this.contains(beliefBase, (((Implication) logicalExpression).LE1))){
+
+                    consequences.add((((Implication) logicalExpression).LE2));
+
+                }else if(this.contains(beliefBase, ((Implication) logicalExpression).LE1)){
+                    consequences.add(((Implication) logicalExpression).LE2);
+                }
+            }else if(logicalExpression instanceof Biimplication){
+                if(this.contains(beliefBase, new Not(((Biimplication) logicalExpression).LE1))){
+                    consequences.add(new Not(((Biimplication) logicalExpression).LE2));
+                }else if(brAgent.contains(beliefBase, ((Biimplication) logicalExpression).LE1)){
+                    consequences.add(((Biimplication) logicalExpression).LE2);
+                }
+
+                if(this.contains(beliefBase, new Not(((Biimplication) logicalExpression).LE2))){
+                    consequences.add(new Not(((Biimplication) logicalExpression).LE1));
+                }else if(this.contains(beliefBase, ((Biimplication) logicalExpression).LE2)){
+                    consequences.add(((Biimplication) logicalExpression).LE1);
+                }
+            }
+            consequences.add(logicalExpression);
+        }
+        return consequences;
+    }
+
+    public boolean contains(ArrayList<LogicalExpression> beliefBase, LogicalExpression le){
+        for (LogicalExpression logicalExpression : beliefBase) {
+            if(logicalExpression.toString().equals(le.toString())){
+                return true;
+            }
+
+        }
+        return true;
+    }
 }

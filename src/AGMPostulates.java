@@ -79,7 +79,41 @@ public class AGMPostulates {
     public void checkClosure() {
         Symbol q = new Symbol("q");
         beliefRevisionAgent.setBeliefBase(testBeliefBase);
-        beliefRevisionAgent.revise(q);
+        ArrayList<LogicalExpression> revisedBase = beliefRevisionAgent.revise(q);
+        ArrayList<LogicalExpression> consequences = beliefRevisionAgent.calculateConsequences(revisedBase);
+
+
+        for(LogicalExpression l : revisedBase) {
+            System.out.println(l.toString());
+        }
+        System.out.println("CONS");
+        for(LogicalExpression l : consequences) {
+            System.out.println(l.toString());
+        }
+        
+        /**
+        p
+        r
+        (p OR q) -> r
+        q
+        
+        CONS
+        p
+        r
+        !r
+        (p OR q) -> r
+        q
+         */
+
+        if(revisedBase.size() == consequences.size()) {
+
+            for(int i = 0; i < consequences.size(); i++) {
+                if(!consequences.get(i).toString().equals(revisedBase.get(i).toString())) {
+                    System.out.println("FAIL " + consequences.get(i).toString() + ", " + revisedBase.get(i).toString());
+                }
+            }
+        }
+        
 
         if(false /*Check for contradictions*/) {
             System.out.println("Closure check succeded.");
