@@ -120,7 +120,7 @@ public class Main {
             BaseChecker bc = new BaseChecker();
             ArrayList<String> symb = bc.getSymbols(LEset);
             bc.fillTruthTable(symb, LEset);
-            bc.checkBase(LEset, symb);
+            boolean consistent = bc.checkBase(LEset, symb);
         }
         // !p, p->q = !q, q?
     }

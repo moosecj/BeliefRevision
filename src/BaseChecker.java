@@ -62,16 +62,13 @@ public class BaseChecker {
 
     public void fillTruthTable(ArrayList<String> symbolList, ArrayList<LogicalExpression> LEset) {
         this.truthTable = new boolean[(int)Math.pow(2, symbolList.size())][symbolList.size()+LEset.size()];
-        if (symbolList.size() == 1){
-            truthTable[0][0] = false;
-            truthTable[1][0] = true;
-        } else {
-            for (int row = 0; row < truthTable.length; row++) {
-                for (int col = 0; col < truthTable[row].length-symbolList.size()+LEset.size(); col++) {
-                    truthTable[row][col] = getBit(row, col) == 1;
-                }
+        
+        for (int row = 0; row < truthTable.length; row++) {
+            for (int col = 0; col < truthTable[row].length-LEset.size(); col++) {;
+                truthTable[row][col] = getBit(row, col) == 1;
             }
         }
+        
 
     }
     
@@ -82,7 +79,6 @@ public class BaseChecker {
                 truthTable[row][symbolList.size()+LEset.indexOf(le)] = tryLeSet(le, truthTable[row], symbolList);
             }
         } 
-        System.out.println(Arrays.deepToString(truthTable).replace("], ", "]\n").replace("[[", "[").replace("]]", "]"));
         for (int row = 0; row < truthTable.length; row++) {
             boolean[] boolVal = Arrays.copyOfRange(truthTable[row], symbolList.size(),symbolList.size()+LEset.size());
             boolean temp = true;
@@ -90,7 +86,6 @@ public class BaseChecker {
                 if (!yes) temp = false; 
             }
             if (temp) {
-                System.out.println("YAHOOOOOO " + Arrays.asList(Arrays.copyOfRange(truthTable[row], symbolList.size(),symbolList.size()+LEset.size())));
                 return true;
             }
         }
