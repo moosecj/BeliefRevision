@@ -1,18 +1,20 @@
-## Getting Started
+To run the belief revision agent you have to run Main.java, located in the src folder.
 
-Welcome to the VS Code Java world. Here is a guideline to help you get started to write Java code in Visual Studio Code.
+You will then be prompted to enter a belief base, however you can also enter one of the following commands:
 
-## Folder Structure
+    agm - this runs the agm test and prints the output
+    reset - this prompts the user to start over with a new beleif base
+    exit - terminates the program
+    help - prints out he syntax for beliefs
 
-The workspace contains two folders by default, where:
+When entering a belief base, you have to adhere to the following syntax:
 
-- `src`: the folder to maintain sources
-- `lib`: the folder to maintain dependencies
+    For a symbol: φ 
+    For a not operation: !φ
+    For an or operation: φ OR ψ
+    For an and operation: φ AND ψ
+    For an implication: φ -> ψ
+    For a biimplication: φ <-> ψ
+    For a paranthesis: (φ)
 
-Meanwhile, the compiled output files will be generated in the `bin` folder by default.
-
-> If you want to customize the folder structure, open `.vscode/settings.json` and update the related settings there.
-
-## Dependency Management
-
-The `JAVA PROJECTS` view allows you to manage your dependencies. More details can be found [here](https://github.com/microsoft/vscode-java-dependency#manage-dependencies).
+An example could be 'p, p -> q' or 'p, p -> (q AND r)'
