@@ -1,7 +1,5 @@
 import java.util.ArrayList;
 
-import javafx.scene.shape.QuadCurve;
-
 public class AGMPostulates {
     /*
     Ones we need to implement:
